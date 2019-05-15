@@ -20,7 +20,7 @@ const MenuBottom = () => {
 					className="ph1 pointer" />				
 				</div>
 			</nav>
-			<hr style={{width: '82%', border:'none', height:'1px', color:'rgb(223,223,223)', backgroundColor:'rgb(223,223,223'}} />
+			<hr className='hr' />
 		</div>
 	)
 }
