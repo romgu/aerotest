@@ -22,11 +22,20 @@
     background-repeat: no-repeat;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Grid Styles */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 0.4fr 0.9fr 0.9fr 0.9fr 3fr;
+    grid-auto-rows: 1fr;
+    align-items: center;
+    justify-content: space-around;
   }
-  to {
-    transform: rotate(360deg);
+
+  .jsStart {
+    justify-self: start;
   }
-}
+
+  .jsEnd {
+    justify-self: end;
+  }
+/*End Grid Styles*/

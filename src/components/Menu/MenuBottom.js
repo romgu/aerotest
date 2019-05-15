@@ -1,19 +1,13 @@
 import React from 'react';
 import leftArrow from './arrow-left.svg';
 import rightArrow from './arrow-right.svg';
-import verticalRuler from './vr.png'
 
-const Menu = () => {
+const MenuBottom = () => {
 	return (
 		<div>
-			<nav className="ph6 pt4 pb2 menu-grid">
+			<nav className="ph6 pt4 pb2 flex items-center justify-between">
 				<span className="pr4">16 of 32 products</span>
-				<img src={verticalRuler} alt="verticalRuler" className="ph1"/>
-				<span className="pr2 jsEnd">Sort by:</span>
-				<span className="ph3 pv2 button mh2 jsStart">Most recent</span>
-				<span className="ph3 pv2 button mh2 jsStart">Lowest Price</span>
-				<span className="ph3 pv2 button mh2 jsStart">Highest Price</span>
-				<div id='navArrows' className="jsEnd">
+				<div id='navArrows' className="">
 					<img 
 					style={{height: 'auto', width: '2rem'}} 
 					src={leftArrow} 
@@ -31,4 +25,4 @@ const Menu = () => {
 	)
 }
 
-export default Menu;
+export default MenuBottom;
