@@ -1,24 +1,13 @@
 import React from 'react';
-import leftArrow from './arrow-left.svg';
-import rightArrow from './arrow-right.svg';
+import Arrows from './Arrows/Arrows';
 
-const MenuBottom = () => {
+
+const MenuBottom = ( { clickArrow, currentPage, products, filteredProducts, showArrowLeft, showArrowRight } ) => {
 	return (
 		<div>
 			<nav className="ph6 pt4 pb2 flex items-center justify-between">
-				<span className="pr4">16 of 32 products</span>
-				<div id='navArrows' className="">
-					<img 
-					style={{height: 'auto', width: '2rem'}} 
-					src={leftArrow} 
-					alt="leftArrow" 
-					className="ph1 pointer"/>				
-					<img 
-					style={{height: 'auto', width: '2rem'}} 
-					src={rightArrow} 
-					alt="rightArrow" 
-					className="ph1 pointer" />				
-				</div>
+				<span className="pr4">{(filteredProducts.length)*(currentPage+1)} of {products.length} products</span>
+				<Arrows />
 			</nav>
 			<hr className='hr' />
 		</div>

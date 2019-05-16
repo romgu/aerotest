@@ -1,20 +1,21 @@
 import React from 'react';
 import Product from './Product'
 
-const Catalogue = ( { products } ) => {
+const ProductList = ( { products } ) => {
 	const productComponent = products.map((item, i) => {
 		return <Product 
 		key={i} 
 		id={products[i].id} 
-		category={products[i].category} 
+		category={products[i].category}
+		cost={products[i].cost} 
 		name={products[i].name} 
 		imageUrl={products[i].img.url}
 		/>
 	})
 	return (
-		<div>
+		<div id="productContainer">
 			{productComponent}
 		</div>
 	)
 }
-export default Catalogue;
+export default ProductList;
