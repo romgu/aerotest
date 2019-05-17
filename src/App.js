@@ -17,8 +17,78 @@ class App extends Component {
 			currentPage: 0,
 			itemsPerPage: 16,
 			showArrowLeft: false,
-			showArrowRight: true
+			showArrowRight: true,
+			sortActive: 'recent'
 		}
+	}
+
+	componentWillMount() {
+		fetch("https://coding-challenge-api.aerolab.co/products", {
+  			method: 'GET',
+  			headers: {  
+			    'Accept': 'application/json',
+			    'Content-Type': 'application/json',
+			    'Authorization': `Bearer ${API_KEY}`
+  			}
+		})   
+		.then(response => response.json())
+		.then((response) => {
+			this.setState({ products: response })
+		}).catch(error => console.log("Something went wrong"));
+
+		fetch("https://coding-challenge-api.aerolab.co/user/me", {
+  			method: 'GET',
+  			headers: {  
+			    'Accept': 'application/json',
+			    'Content-Type': 'application/json',
+			    'Authorization': `Bearer ${API_KEY}`
+  			}
+		})   
+		.then(response => response.json())
+		.then((response) => {
+			this.setState({ user: response})
+		}).catch(error => console.log("Something went wrong"));
+	}
+
+	componentDidUpdate(){
+		console.log(this.state.products)
+		console.log(this.state.sortActive)
+	}
+
+	sortByLowPrice = () => {
+		const { products } = this.state;
+		const productsByLow = products.sort(function(a, b) {
+		  return a.cost - b.cost;
+		});
+		this.setState({ 
+			products: productsByLow,
+			sortActive: 'lowPrice' })
+	}	
+
+	sortByHighPrice = () => {
+		const { products } = this.state;
+		const productsByHigh = products.sort(function(a, b) {
+		  return b.cost - a.cost;
+		});
+		this.setState({ products: productsByHigh,
+			sortActive: 'highPrice' })
+	}
+
+	sortByRecent = () => {
+		fetch("https://coding-challenge-api.aerolab.co/products", {
+  			method: 'GET',
+  			headers: {  
+			    'Accept': 'application/json',
+			    'Content-Type': 'application/json',
+			    'Authorization': `Bearer ${API_KEY}`
+  			}
+		})   
+		.then(response => response.json())
+		.then((response) => {
+			this.setState({ products: response,
+			 sortActive: 'recent' })
+		}).catch(error => console.log("Something went wrong"));
+
 	}
 
 	toggleArrows = (arrow) => {
@@ -39,67 +109,38 @@ class App extends Component {
 		}	
 	};
 
-	
-
-	componentWillMount() {
-		fetch("https://coding-challenge-api.aerolab.co/products", {
-  			method: 'GET',
-  			headers: {  
-			    'Accept': 'application/json',
-			    'Content-Type': 'application/json',
-			    'Authorization': `Bearer ${API_KEY}`
-  			}
-		})   
-		.then(response => response.json())
-		.then((response) => {
-			this.setState({ products: response})
-		}).catch(error => console.log("Something went wrong"));
-
-		fetch("https://coding-challenge-api.aerolab.co/user/me", {
-  			method: 'GET',
-  			headers: {  
-			    'Accept': 'application/json',
-			    'Content-Type': 'application/json',
-			    'Authorization': `Bearer ${API_KEY}`
-  			}
-		})   
-		.then(response => response.json())
-		.then((response) => {
-			this.setState({ user: response})
-		}).catch(error => console.log("Something went wrong"));
-	}
-
-	componentDidUpdate() {
-		console.log(this.state.products)
-	}
-
 	render() {
-		const { user, products, itemsPerPage, currentPage, showArrowLeft, showArrowRight} = this.state;
+		const { user, products, itemsPerPage, currentPage, showArrowLeft, showArrowRight, sortActive} = this.state;
 		const filteredProducts = products.slice(
 			currentPage * parseInt (itemsPerPage, 0), 
 			(currentPage + 1) * parseInt(itemsPerPage, 0)
 		);
+
 		return (
 		    <div className="App">
 		      <Navigation user={user} />
 		      <Header />
 		      <Menu 
-		      currentPage={currentPage} 
-		      clickArrow={this.onClickArrow} 
-		      products={products} 
-		      filteredProducts={filteredProducts}
-		      showArrowLeft={showArrowLeft}
-		      showArrowRight={showArrowRight}
-		      toggleArrows={this.toggleArrows} 
+			      currentPage={currentPage} 
+			      clickArrow={this.onClickArrow} 
+			      products={products} 
+			      filteredProducts={filteredProducts}
+			      showArrowLeft={showArrowLeft}
+			      showArrowRight={showArrowRight}
+			      toggleArrows={this.toggleArrows}
+			      sortByLowPrice={this.sortByLowPrice}
+			      sortByHighPrice={this.sortByHighPrice}
+			      sortByRecent={this.sortByRecent}
+			      sortActive={sortActive}
 		      />
 		      <ProductList products={filteredProducts} />
 		      <MenuBottom 
-		      currentPage={currentPage} 
-		      clickArrow={this.onClickArrow} 
-		      products={products} 
-		      filteredProducts={filteredProducts}
-		      showArrowLeft={showArrowLeft}
-		      showArrowRight={showArrowRight} 
+			      currentPage={currentPage} 
+			      clickArrow={this.onClickArrow} 
+			      products={products} 
+			      filteredProducts={filteredProducts}
+			      showArrowLeft={showArrowLeft}
+			      showArrowRight={showArrowRight} 
 		      />
 		    </div>
 		);

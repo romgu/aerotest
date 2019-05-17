@@ -6,11 +6,16 @@
   background-color: #eee;
   border: none;
   color: black;
-  padding: 2px 5px;
+  padding: 2px 2px;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
   border-radius: 16px;
+  width: 60%;
+}
+
+.button-active {
+  background-color: #96CCFF;
 }
 
 .header-Cover {
@@ -33,6 +38,11 @@
 h4 {
   line-height: 15px;
   margin: 10px 0 5px 0;
+}
+
+span.is-active {
+  background-color: red;
+  color: white;
 }
 /* Grid Styles */
   .menu-grid {
